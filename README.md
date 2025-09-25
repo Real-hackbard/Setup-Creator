@@ -1,2 +1,23 @@
-# Setup-Creator
-This is an Example of how to Program your own Setup and Uninstall Program for your Project.
+# Setup-Creator:
+
+</br>
+
+```ruby
+Compiler    : Delphi10 Seattle, 10.1 Berlin, 10.2 Tokyo, 10.3 Rio, 10.4 Sydney, 11 Alexandria, 12 Athens
+Components  : None
+Discription : Setup and Uinstall Creator for Delphi Projects
+Last Update : 09/2025
+License     : Freeware
+```
+
+</br>
+
+A Setup Program is specialized Software used to install and configure other applications, Operating Systems, or Hardware drivers on a Computer. It often guides the user through a process with dialog boxes to copy all necessary files, make configuration settings, and prepare the Program for use.
+
+Using this example, you can create your own setup.exe and uninstall.exe for your project. You can integrate and install as many files as needed. Registry entries will be made so that the uninstaller can subsequently find and uninstall all or individual files.
+
+</br>
+
+![setup creator](https://github.com/user-attachments/assets/a5a55469-b80a-4291-bed5-f997d8cc0ea7)
+
+</br>
