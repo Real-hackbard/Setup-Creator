@@ -21,3 +21,51 @@ Using this example, you can create your own setup.exe and uninstall.exe for your
 ![setup creator](https://github.com/user-attachments/assets/a5a55469-b80a-4291-bed5-f997d8cc0ea7)
 
 </br>
+
+### Instructions:
+* To integrate your own files into the setup, you first need to create the *.res files.
+
+```pascal
+program CustomInstaller;
+
+uses
+  Forms,
+  fSetup in 'fSetup.pas' {Form1};
+
+{$R *.res}
+{$R AppFiles.res}      <-- Install Files
+{$R AppResources.res}  <-- Media Files
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TForm1, Form1);
+  Application.Run;
+end.
+```
+
+* To do this, you need the "brcc32.exe", which you can find in your Delphi Program under the "..\bin\brcc32.exe" folder. Copy this file into your project folder.
+* Next, you need to specify and save the files you want to include in your setup program in the *.rc file.
+
+
+### {$R AppFiles.res}
+```pascal
+MyApp    RCDATA "MyApp.exe"
+dllA     RCDATA "A.DLL"
+dllB     RCDATA "B.DLL"
+HelpFile RCDATA "MyApp.chm"
+Uninstaller RCDATA "Uninstall.exe"
+```
+
+### {$R AppResources.res}
+```pascal
+MyAppImage    RCDATA "MyApp.jpg"
+SetupIcon     RCDATA "SetupIcon.jpg"
+```
+
+* Now Drag and Drop the "*.rc" File onto the "brcc32.exe" and the "*.res" file will be created.
+* Now you can integrate and use the created files in your project.
+
+
+
+
+
