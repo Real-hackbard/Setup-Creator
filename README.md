@@ -188,3 +188,57 @@ begin
 end;
 ```
 
+</br>
+
+### Uninstall Program:
+* Open the Uninstallation Project.
+* To successfully remove your installed program from the system, you must enter the registry key that you used during installation.
+```pascal
+procedure TfrmUninstall.LoadInstallationDirFromRegistry;
+var
+   reg: TRegistry;
+begin
+   reg := TRegistry.Create;
+   try
+      reg.RootKey := HKEY_CURRENT_USER;
+      reg.OpenKey('Software\MyCompany\MyApp', true);
+      sInstallDir := reg.ReadString('Installation directory');
+   finally
+      reg.Free
+   end;
+end;
+```
+
+* Hier kannst du bestimmen, welche Rubriken deinstalliert werden sollen.
+```pascal
+procedure TfrmUninstall.btnUninstallClick(Sender: TObject);
+begin
+
+   { Find out where the application has been installed }
+   LoadInstallationDirFromRegistry;
+
+   { Remove the last backslash from the installation folder name }
+   Delete(sInstallDir, length(sInstallDir), 1);
+
+   { Delete the created shortcuts }
+   DeleteShortcuts;
+
+   { Delete the Windows registry keys we created at installation }
+   DeleteRegistryKeys;
+
+   { "Unregister" the uninstaller app from the "Add/Remove programs" control panel section }
+   UnregisterUninstaller;
+
+   { Delete the installation folder }
+   if DirectoryExists(sInstallDir) then
+      SH_DeleteFiles(sInstallDir);
+
+   MessageDlg('MyApp has been successfully removed from your computer.', mtInformation, [mbOK], 0);
+
+   Close;
+end;
+```
+
+
+
+
