@@ -65,7 +65,74 @@ SetupIcon     RCDATA "SetupIcon.jpg"
 * Now Drag and Drop the "*.rc" File onto the "brcc32.exe" and the "*.res" file will be created. The more files you include as RCDATA, the larger the "*.res" File in your Project will be.
 * Now you can integrate and use the created files in your project.
 
+* This part of the code registers your program's links in the registry.
+```pascal
+try
+         reg.RootKey := HKEY_CURRENT_USER;
+         reg.OpenKey('Software\MicroSoft\Windows\CurrentVersion\Explorer\Shell Folders', false);
 
+         case ShortcutFolder of
+            sfCustom: { Do nothing, it has been covered above! };
+            sfStartMenu: sDirectory := reg.ReadString('Start Menu') + '\' + sShortcutFolder;
+            sfPrograms: sDirectory := reg.ReadString('Programs') + '\' + sShortcutFolder;
+            sfDesktop: sDirectory := reg.ReadString('Desktop') + '\' + sShortcutFolder;
+         end;
+         
+      finally
+         reg.Free
+end;
+```
 
+* To let the Windows system know which program is installed on your system, your program's key is written to the registry here. This section is important for uninstalling or updating your program.
 
+```pascal
+function GetProgramFilesDirectory: string;
+var
+   reg: TRegistry;
+begin
+   reg := TRegistry.Create;
+   try
+      reg.RootKey := HKEY_LOCAL_MACHINE;
+      reg.OpenKey('\SOFTWARE\Microsoft\Windows\CurrentVersion', True);
+      result := reg.ReadString('ProgramFilesDir');
+   finally
+      reg.Free
+   end;
+   { Append a backslash at the end (if not present already }
+   if (result <> '') and (result[Length(result)] <> '\') then
+      result := result + '\';
+end;
+```
 
+* Here, you'll need to add all the files you specified as names in the RCDATA file so the setup program can install them into the system. This also applies to the uninstaller.
+
+```pascal
+procedure TForm1.DoInstall(Sender: TObject);
+begin
+   { Hide "Install button }
+   btnInstall.Visible := false;
+
+   { read target folder from the appropraite edit box text }
+   sInstallDir := edTargetFolder.Text;
+   { Create the folder full path } 
+   ForceDirectories(sInstallDir);
+
+   { Extract the application files }
+	DoExtractResource('MyApp', sInstallDir + 'MyApp.exe');
+	DoExtractResource('dllA', sInstallDir + 'A.DLL');
+	DoExtractResource('dllB', sInstallDir + 'B.DLL');
+	DoExtractResource('Helpfile', sInstallDir + 'MyApp.chm');
+
+   { Extract the uninstaller executable as well. }
+	DoExtractResource('Uninstaller', sInstallDir + 'Uninstall.exe');
+
+   { Create the shortcuts as required }
+   CreateShortcuts;
+
+   { Save the installation directory in Windows registry }
+   SaveInstallationDirInRegistry;
+
+   { Register the uninstaller application with the "Add / remove programs" in Control Panel }
+   RegisterUninstallerWithControlPanel; 
+end;
+```
