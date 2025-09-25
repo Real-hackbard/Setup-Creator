@@ -44,7 +44,7 @@ end.
 ```
 
 * To do this, you need the "brcc32.exe", which you can find in your Delphi Program under the "..\bin\brcc32.exe" folder. Copy this file into your project folder.
-* Next, you need to specify and save the files you want to include in your setup program in the *.rc file.
+* Next, you need to specify and save the files you want to include in your setup program in the "*.rc" file.
 
 
 ### {$R AppFiles.res}
