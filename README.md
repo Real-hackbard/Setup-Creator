@@ -23,7 +23,7 @@ Using this example, you can create your own setup.exe and uninstall.exe for your
 </br>
 
 ### Instructions:
-* To integrate your own files into the setup, you first need to create the *.res files.
+* To integrate your own files into the setup, you first need to create the "*.res" files.
 
 ```pascal
 program CustomInstaller;
