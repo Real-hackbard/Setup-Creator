@@ -239,6 +239,9 @@ begin
 end;
 ```
 
+</br>
 
+### Conclusion:
+Professional setup programs usually require a fee and leave a mark on your project. Therefore, it's more advantageous to use your own setup program. You can integrate and verify your own license without requiring someone else's consent.
 
 
