@@ -209,7 +209,7 @@ begin
 end;
 ```
 
-* Hier kannst du bestimmen, welche Rubriken deinstalliert werden sollen.
+* Here you can specify which categories should be uninstalled.
 ```pascal
 procedure TfrmUninstall.btnUninstallClick(Sender: TObject);
 begin
