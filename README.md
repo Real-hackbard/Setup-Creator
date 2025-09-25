@@ -62,7 +62,7 @@ MyAppImage    RCDATA "MyApp.jpg"
 SetupIcon     RCDATA "SetupIcon.jpg"
 ```
 
-* Now Drag and Drop the "*.rc" File onto the "brcc32.exe" and the "*.res" file will be created.
+* Now Drag and Drop the "*.rc" File onto the "brcc32.exe" and the "*.res" file will be created. The more files you include as RCDATA, the larger the "*.res" File in your Project will be.
 * Now you can integrate and use the created files in your project.
 
 
