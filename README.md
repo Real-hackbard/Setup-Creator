@@ -136,3 +136,55 @@ begin
    RegisterUninstallerWithControlPanel; 
 end;
 ```
+
+* In this section you can determine which of your files that are installed into the system will be linked on the desktop.
+
+```pascal
+procedure TForm1.CreateShortcuts;
+begin
+
+   { shortcut in "programs" - ALWAYS }
+   CreateShortCut(sInstallDir + 'MyApp.exe',
+                  '',
+                  'MyApp Description', 'MyApp.lnk',
+                  sfPrograms,
+                  'MyApp',
+                  '');
+
+   { shortcut on desktop }
+   if chShortcutOnDesktop.Checked then
+      CreateShortCut(sInstallDir + 'MyApp.exe',
+                     '',
+                     'MyApp Description', 'MyApp.lnk',
+                     sfDesktop,
+                     '',
+                     '');
+
+   { shortcut in start menu }
+   if chShortcutInStartMenu.Checked then
+      CreateShortCut(sInstallDir + 'MyApp.exe',
+                     '',
+                     'MyApp Description', 'MyApp.lnk',
+                     sfStartMenu,
+                     '',
+                     '');
+
+   { a shortcut for the application help file in "programs" - ALWAYS }
+   CreateShortCut(sInstallDir + 'MyApp.chm',
+                  '',
+                  'MyApp HTML help', 'MyAppHelp.lnk',
+                  sfPrograms,
+                  'MyApp',
+                  '');
+
+   { Finally, a shortcut for Uninstaller in "programs" - ALWAYS }
+   CreateShortCut(sInstallDir + 'Uninstall.exe',
+                  '',
+                  'Uninstall MyApp', 'MyAppUninstaller.lnk',
+                  sfPrograms,
+                  'MyApp',
+                  '');
+
+end;
+```
+
